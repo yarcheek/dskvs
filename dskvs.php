@@ -22,14 +22,12 @@ if (!class_exists("DSKVS")) {
 			if (!is_dir($db_dir) && !mkdir($db_dir)) error_log('Cannot create the KVS database directory '.$db_dir);
 		}
 
-		public function lock($lock) {
-			if (!is_bool($lock)) return false;			
+		public function lock() {
 			$this->locked = true;			
 			return true;
 		}
 
-		public function unlock($lock) {
-			if (!is_bool($lock)) return false;			
+		public function unlock() {
 			$this->locked = false;			
 			return true;
 		}
@@ -60,7 +58,7 @@ if (!class_exists("DSKVS")) {
 		}	
 
 		public function set($key, $val) {
-			if ($this->locked || in_array($key, $this->lockedKeys)) return false;
+			if ($this->isLocked() || $this->isKeyLocked($key)) return false;
 			$val = var_export($val, true);
 			$file = $this->storageDir.'/'.$this->db.'/'.$key;
 			file_put_contents($file, '<?php $val = ' . $val . ';', LOCK_EX);			
