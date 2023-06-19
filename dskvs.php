@@ -15,11 +15,11 @@ if (!class_exists("DSKVS")) {
 		private $db;
 		private $storageDir;
 				
-		function __construct($db = 'default', $dir = '/tmp') {
+		function __construct($db = 'default', $dir = '/tmp/dskvs') {
 			$this->storageDir = rtrim($dir, '/');
 			$this->db = $db;
 			$db_dir = $this->storageDir.'/'.$this->db;			
-			if (!is_dir($dir)) error_log('Cannot access the KVS directory '.$this->storageDir);			
+			if (!is_dir($dir) && !mkdir($dir)) error_log('Cannot access the KVS directory '.$this->storageDir);			
 			if (!is_dir($db_dir) && !mkdir($db_dir)) error_log('Cannot create the KVS database directory '.$db_dir);
 		}
 
@@ -39,13 +39,13 @@ if (!class_exists("DSKVS")) {
 			return $this->locked;
 		}
 
-		public function lockKeys($keys) {
+		public function lockKey($keys) {
 			if (!is_array($keys) && !is_string($keys)) return false;			
 			$this->lockedKeys += (array)$keys;			
 			return true;
 		}
 
-		public function unlockKeys($keys) {
+		public function unlockKey($keys) {
 			if (!is_array($keys) && !is_string($keys)) return false;	
 			$this->lockedKeys = array_diff($this->lockedKeys, (array)$keys);
 			return true;
