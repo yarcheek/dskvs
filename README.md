@@ -69,6 +69,11 @@ $logs->set(time(), array(
 
 
 ## Technical notes
+- Consumptions is about 2 to 3 time higher than Memcache/Redis due to the simplicity of implementation
 - Data is stored (by default) in the /tmp directory where each key is a separate file. This is a good configuration for a cached data. If you want to have data persisten also after a server reboot, set a different location such as /var/www/html, etc..
-- When opcache is enabled, PHP caches thsese files which makes it so fast, otherwise is as fast as storing data in a file. Opcache by default won't recompile files 2s old at least, so we hack it when updating a value by setting the file date older.
 - Make sure to have a storage directory structure prepared beforehand should you use a custom configuration.
+- Make sure to have enough room in the opcache settins so PHP can actuall cache these files
+ 
+## Opcache specifics
+- It's not so great to use this technique for data that gets rewritten often. Opcache does not defragment or free up old data, it simply marks it as "wasted." Eventually you will fill up to your limit of wasted memory, which will trigger a opcache reset. Not a bad idea to use opcache file caching on the permanent scripts to speed that up. Pre-loading as well. 
+- You may want to play around with opcache settings such as opcache.max_accelerated_files, opcache.memory_consumption, opcache.interned_strings_buffer(32)
