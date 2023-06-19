@@ -2,7 +2,6 @@
 
 /* 
  * Dead simple KVS for PHP. It's been designed with the opcache in mind which makes it superfast.
- * Inpired by https://medium.com/@dylanwenzlau/500x-faster-caching-than-redis-memcache-apc-in-php-hhvm-dcd26e8447ad
  * Copyright © 2023 Martin Jarcik <martin.jarcik@gmail.com>. All rights reserved.
  */
  
