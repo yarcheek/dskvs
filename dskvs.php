@@ -63,14 +63,11 @@ if (!class_exists("DSKVS")) {
 			if ($this->locked || in_array($key, $this->lockedKeys)) return false;
 			$val = var_export($val, true);
 			$file = $this->storageDir.'/'.$this->db.'/'.$key;
-			file_put_contents($file, '<?php $val = ' . $val . ';', LOCK_EX);
-			
-			// opcache magic: setting an older date to overcome the opcache.revalidate_freq=2; recreating and warming up the file's cache
-			touch($file, time()-2);
+			file_put_contents($file, '<?php $val = ' . $val . ';', LOCK_EX);			
+			touch($file, time()-2); // hack to overcome the default opcache.revalidate_freq=2 settings
 			opcache_invalidate($file);
 			opcache_compile_file($file);			
-			@include $file;
-			
+			@include $file; //warming up the file's opcache			
 			return true;
 		}
 		
