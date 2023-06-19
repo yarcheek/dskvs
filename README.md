@@ -73,7 +73,7 @@ $logs->set(time(), array(
 Data is stored (by default) in the `/tmp` directory where each key is a separate file. This is a good configuration for a cache type of data. If you want to have data persisten also after a server reboot, set a different location such as `/var/www/html`, etc.. Make sure to have a storage directory structure prepared beforehand should you use a custom configuration.
  
 ## Opcache notes
-Your  `opcache.memory_consumption` setting needs to be larger than the size of all your code files plus all the data you plan to store.
+Your `opcache.memory_consumption` setting needs to be larger than the size of all your code files plus all the data you plan to store.
 Your `opcache.max_accelerated_files` setting needs to be larger than your total number of code files plus the total number of keys.
 Your `opcache.interned_strings_buffer` settings may need to be larger than default 8 (use 16 or 32 for instance) should you store larger datasets.
 If those settings aren’t high enough, the storage will still work, but its performance may suffer.
