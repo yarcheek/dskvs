@@ -65,10 +65,14 @@ if (!class_exists("DSKVS")) {
 			$val = var_export($val, true);
 			$file = $this->storageDir.'/'.$this->db.'/'.$key;
 			file_put_contents($file, '<?php $val = ' . $val . ';', LOCK_EX);
+			
+			// opcache magic: setting an older date so the overcome the opcache.revalidate_freq; recreating and warming up the cache
 			touch($file, time()-2);
 			opcache_invalidate($file);
-			opcache_compile_file($file);
-			return truel
+			opcache_compile_file($file);			
+			@include $file;
+			
+			return true;
 		}
 		
 		public function get($key) {
