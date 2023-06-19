@@ -65,7 +65,7 @@ if (!class_exists("DSKVS")) {
 			$file = $this->storageDir.'/'.$this->db.'/'.$key;
 			file_put_contents($file, '<?php $val = ' . $val . ';', LOCK_EX);
 			
-			// opcache magic: setting an older date so the overcome the opcache.revalidate_freq=2; recreating and warming up the cache
+			// opcache magic: setting an older date to overcome the opcache.revalidate_freq=2; recreating and warming up the file's cache
 			touch($file, time()-2);
 			opcache_invalidate($file);
 			opcache_compile_file($file);			
