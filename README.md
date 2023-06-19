@@ -78,4 +78,4 @@ Your `opcache.max_accelerated_files` setting needs to be larger than your total 
 Your `opcache.interned_strings_buffer` settings may need to be larger than default 8 (use 16 or 32 for instance) should you store larger datasets.
 If those settings aren’t high enough, the storage will still work, but its performance may suffer.
 
-It's not so great to use this technique for data that gets rewritten often. Opcache does not defragment or free up old data, it simply marks it as "wasted." Eventually you will fill up to your limit of wasted memory, which will trigger a opcache reset. Not a bad idea to use opcache file caching on the permanent scripts to speed that up. Pre-loading as well. 
+It's not so great to use this technique for data that gets rewritten often. Opcache does not defragment or free up old data, it simply marks it as "wasted." Eventually you will fill up to your limit of wasted memory, which will trigger a opcache reset.
