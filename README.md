@@ -48,7 +48,7 @@ $storage->currentDB();
 ```
 
 ```
-# Settings when data are stored in /tmp/dskvs/users
+# Custom database name, data is stored in /tmp/dskvs/users
 $users = new DSKVS('users');
 $users->set('martin_white', array(
   'name' => 'Martin White',
@@ -58,7 +58,7 @@ echo $users->get('martin_white')['age'];
 ```
 
 ```
-# Settings when data are stored in /var/logs/myapp
+# Custom database name and custom store location, data is stored in /var/logs/myapp
 $logs = new DSKVS('myapp', '/var/logs');
 $logs->set(time(), array(
   'env' => 'prod',
