@@ -38,7 +38,7 @@ if (!class_exists("DSKVS")) {
 
 		public function lockKey($keys) {
 			if (!is_array($keys) && !is_string($keys)) return false;			
-			$this->lockedKeys += (array)$keys;			
+			$this->lockedKeys = array_merge($this->lockedKeys, (array)$keys);			
 			return true;
 		}
 
